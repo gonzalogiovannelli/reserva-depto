@@ -152,3 +152,17 @@ body, html {
 .btn-cancelar:hover {
   background-color: #b71c1c;
 }
+
+/* Botón flotante que aparece cuando hay fechas seleccionadas */
+.boton-flotante {
+  position: sticky; /* Se mantendrá visible al hacer scroll, pero sin quedar fijo al final */
+  bottom: 20px;  /* Se mantendrá 20px desde el borde inferior */
+  background-color: #1976d2;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;  /* Aseguramos que el botón siempre esté por encima de otros elementos */
+}

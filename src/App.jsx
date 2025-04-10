@@ -97,7 +97,6 @@ function App() {
     });
   };
 
-  // Confirmar reserva y escribir en la base de datos
   useEffect(() => {
     const confirmarReserva = () => {
       if (!rangoInicio || !rangoFin || !usuario) return;
