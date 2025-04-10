@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, onValue, set } from "firebase/database";
+import { ref, onValue, set, remove } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
-import "./App.css"; // Asegúrate de tener estilos para el botón flotante y el cartel
+import "./App.css";
 
 function App() {
   const [usuario, setUsuario] = useState(null);
   const [meses, setMeses] = useState([]);
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
-  const [nombreOcupante, setNombreOcupante] = useState("");
+  const [mensajeReserva, setMensajeReserva] = useState("");
+  const [reservas, setReservas] = useState({});
+  const [listadoReservas, setListadoReservas] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [cargando, setCargando] = useState(true);
-  const [mensajeReserva, setMensajeReserva] = useState("");
-  const [reservas, setReservas] = useState({}); // Estado para las reservas
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -56,7 +56,15 @@ function App() {
   useEffect(() => {
     const reservasRef = ref(db, "reservas");
     onValue(reservasRef, (snapshot) => {
-      setReservas(snapshot.val() || {});
+      const data = snapshot.val() || {};
+      setReservas(data);
+
+      // Generar listado de reservas
+      const hoy = new Date().toISOString().slice(0, 10);
+      const reservasListado = Object.entries(data)
+        .filter(([fecha]) => fecha >= hoy)
+        .map(([fecha, { ocupadoPor }]) => ({ fecha, ocupadoPor }));
+      setListadoReservas(reservasListado);
     });
   }, []);
 
@@ -90,7 +98,7 @@ function App() {
   const confirmarReserva = () => {
     if (!rangoInicio || !rangoFin || !usuario) return;
 
-    const nombre = usuario.email.substring(0, 5); // Usamos los primeros 5 caracteres del email
+    const nombre = usuario.email.substring(0, 5);
 
     let fecha = rangoInicio;
     while (fecha <= rangoFin) {
@@ -107,9 +115,18 @@ function App() {
 
     setRangoInicio(null);
     setRangoFin(null);
-    setNombreOcupante("");
     setMensajeReserva("Reserva confirmada exitosamente 🎉");
     setTimeout(() => setMensajeReserva(""), 3000);
+  };
+
+  const cancelarReserva = (fecha) => {
+    if (!usuario) return;
+
+    const refReserva = ref(db, `reservas/${fecha}`);
+    remove(refReserva).then(() => {
+      setMensajeReserva("Reserva cancelada exitosamente 🗑️");
+      setTimeout(() => setMensajeReserva(""), 3000);
+    });
   };
 
   if (cargando) return <div>Iniciando sesión...</div>;
@@ -160,7 +177,9 @@ function App() {
             rangoFin={rangoFin}
             seleccionarDia={seleccionarDia}
             enRango={enRango}
-            reservas={reservas} // Pasamos las reservas al calendario
+            reservas={reservas}
+            cancelarReserva={cancelarReserva}
+            usuario={usuario}
           />
         </div>
       ))}
@@ -175,6 +194,17 @@ function App() {
       )}
 
       {mensajeReserva && <div className="cartel-confirmacion">{mensajeReserva}</div>}
+
+      <div className="listado-reservas">
+        <h2>Listado de Reservas</h2>
+        <ul>
+          {listadoReservas.map(({ fecha, ocupadoPor }) => (
+            <li key={fecha}>
+              {fecha} - {ocupadoPor}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

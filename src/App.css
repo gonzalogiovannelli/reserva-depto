@@ -68,6 +68,20 @@
   z-index: 1000;
 }
 
+.listado-reservas {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.listado-reservas ul {
+  list-style: none;
+  padding: 0;
+}
+
+.listado-reservas li {
+  margin: 5px 0;
+}
+
 /* filepath: c:\Users\Gonza\Google Drive\Portfolio\reserva-depto\src\CalendarioMensual.css */
 .dia {
   padding: 10px;
@@ -77,11 +91,29 @@
 }
 
 .dia.ocupado {
-  background-color: red;
-  color: white;
+  background-color: #ffcccc; /* Rojo más suave */
+  color: black;
 }
 
 .dia.seleccionado {
   background-color: green;
   color: white;
+}
+
+.numero-dia {
+  font-size: 18px; /* Tamaño más grande para el número */
+  font-weight: bold;
+}
+
+.ocupado-nombre {
+  font-size: 14px; /* Tamaño más pequeño para el nombre */
+}
+
+.btn-cancelar {
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
 }

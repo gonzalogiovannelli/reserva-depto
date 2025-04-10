@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CalendarioMensual.css";
 
-function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, enRango, reservas }) {
+function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, reservas, cancelarReserva, usuario }) {
   const [diasDelMes, setDiasDelMes] = useState([]);
 
   const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
@@ -49,6 +49,8 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
           }
 
           const clase = enRango(dia.clave) ? "seleccionado" : dia.estado;
+          const esUsuario = dia.reservadoPor === usuario.email;
+
           return (
             <div
               key={i}
@@ -59,6 +61,14 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
               {dia.estado === "ocupado" && (
                 <div className="ocupado-nombre" title={dia.ocupadoPor}>
                   {dia.ocupadoPor}
+                  {esUsuario && (
+                    <button
+                      className="btn-cancelar"
+                      onClick={() => cancelarReserva(dia.clave)}
+                    >
+                      Cancelar
+                    </button>
+                  )}
                 </div>
               )}
             </div>
