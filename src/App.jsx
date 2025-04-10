@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
 
@@ -14,13 +13,8 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [cargando, setCargando] = useState(true);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   useEffect(() => {
     const auth = getAuth();
@@ -32,7 +26,6 @@ function App() {
       }
       setCargando(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -60,10 +53,7 @@ function App() {
     for (let i = 0; i <= 12; i++) {
       const fecha = new Date(inicio);
       fecha.setMonth(fecha.getMonth() + i);
-      lista.push({
-        year: fecha.getFullYear(),
-        month: fecha.getMonth(),
-      });
+      lista.push({ year: fecha.getFullYear(), month: fecha.getMonth() });
     }
     setMeses(lista);
   }, []);
@@ -90,9 +80,7 @@ function App() {
 
   const handleLogout = () => {
     const auth = getAuth();
-    signOut(auth).then(() => {
-      setUsuario(null);
-    });
+    signOut(auth).then(() => setUsuario(null));
   };
 
   const confirmarReserva = () => {
@@ -149,17 +137,17 @@ function App() {
   }
 
   return (
-    <div className="calendario">
+    <div className="calendario-container">
       <div className="header">
         <h1>Calendario de Reservas 🏠</h1>
         <span className="email">{usuario.email}</span>
         <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
+      <div className="confirmar-reserva">
         <button
-          onClick={confirmarReserva} 
-          style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#1976d2", color: "white" }}
+          onClick={confirmarReserva}
+          className="boton-flotante"
         >
           Confirmar reserva
         </button>
