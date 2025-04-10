@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { ref, onValue, set, remove } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
@@ -13,13 +13,6 @@ function App() {
   const [mensajeReserva, setMensajeReserva] = useState("");
   const [reservas, setReservas] = useState({});
   const [listadoReservas, setListadoReservas] = useState([]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
-  const [cargando, setCargando] = useState(true);
-
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   useEffect(() => {
     const auth = getAuth();
@@ -29,7 +22,6 @@ function App() {
       } else {
         setUsuario(null);
       }
-      setCargando(false);
     });
     return () => unsubscribe();
   }, []);
@@ -52,14 +44,12 @@ function App() {
     setMeses(lista);
   }, []);
 
-  // Sincronizar reservas desde Firebase
   useEffect(() => {
     const reservasRef = ref(db, "reservas");
     onValue(reservasRef, (snapshot) => {
       const data = snapshot.val() || {};
       setReservas(data);
 
-      // Generar listado de reservas
       const hoy = new Date().toISOString().slice(0, 10);
       const reservasListado = Object.entries(data)
         .filter(([fecha]) => fecha >= hoy)
@@ -86,13 +76,6 @@ function App() {
     if (!rangoInicio) return false;
     if (!rangoFin) return clave === rangoInicio;
     return clave >= rangoInicio && clave <= rangoFin;
-  };
-
-  const handleLogout = () => {
-    const auth = getAuth();
-    signOut(auth).then(() => {
-      setUsuario(null);
-    });
   };
 
   const confirmarReserva = () => {
@@ -129,35 +112,8 @@ function App() {
     });
   };
 
-  if (cargando) return <div>Iniciando sesión...</div>;
-
   if (!usuario) {
-    return (
-      <div className="login-container">
-        <h1>{isLogin ? "Iniciar sesión" : "Registrarse"}</h1>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={handlePasswordChange}
-          onKeyDown={(e) => e.key === "Enter" && login()}
-        />
-        {isLogin ? (
-          <button onClick={login}>Iniciar sesión</button>
-        ) : (
-          <button onClick={register}>Registrarse</button>
-        )}
-        <button onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión"}
-        </button>
-      </div>
-    );
+    return <div>Inicia sesión para usar la aplicación</div>;
   }
 
   return (
@@ -165,7 +121,7 @@ function App() {
       <div className="header">
         <h1>Calendario de Reservas 🏠</h1>
         <span className="email">{usuario.email}</span>
-        <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
+        <button onClick={() => signOut(getAuth())} className="btn-logout">Cerrar sesión</button>
       </div>
 
       {meses.map(({ year, month }) => (
@@ -176,7 +132,7 @@ function App() {
             rangoInicio={rangoInicio}
             rangoFin={rangoFin}
             seleccionarDia={seleccionarDia}
-            enRango={enRango}
+            enRango={enRango} // Pasamos la función enRango como prop
             reservas={reservas}
             cancelarReserva={cancelarReserva}
             usuario={usuario}
@@ -185,10 +141,7 @@ function App() {
       ))}
 
       {rangoInicio && rangoFin && (
-        <button
-          onClick={confirmarReserva}
-          className="boton-flotante"
-        >
+        <button onClick={confirmarReserva} className="boton-flotante">
           Confirmar reserva
         </button>
       )}

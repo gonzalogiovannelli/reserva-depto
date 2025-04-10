@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CalendarioMensual.css";
 
-function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, reservas, cancelarReserva, usuario }) {
+function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, enRango, reservas, cancelarReserva, usuario }) {
   const [diasDelMes, setDiasDelMes] = useState([]);
 
   const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
