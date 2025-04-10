@@ -1,62 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { ref, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
 
-// Componente principal de la aplicación
 function App() {
   const [usuario, setUsuario] = useState(null);
   const [meses, setMeses] = useState([]);
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
   const [nombreOcupante, setNombreOcupante] = useState("");
-  const [email, setEmail] = useState(""); // Estado para el email
-  const [password, setPassword] = useState(""); // Estado para la contraseña
-  const [isLogin, setIsLogin] = useState(true); // Estado para saber si es login o registro
-  const [cargando, setCargando] = useState(true); // Estado para el proceso de carga
 
-  // Controlador para el cambio del email
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  // Controlador para el cambio de la contraseña
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  // Verifica el estado de autenticación
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUsuario(user);
-      } else {
-        setUsuario(null);
-      }
-      setCargando(false); // Una vez que verificamos el estado de autenticación
+      setUsuario(user);
     });
-
-    return () => unsubscribe(); // Limpiar la suscripción cuando el componente se desmonte
+    return () => unsubscribe();
   }, []);
-
-  // Función para iniciar sesión con correo y contraseña
-  const login = async () => {
-    try {
-      await signInWithEmailAndPassword(getAuth(), email, password);
-    } catch (error) {
-      alert("Error al iniciar sesión: " + error.message);
-    }
-  };
-
-  // Función para registrar un nuevo usuario
-  const register = async () => {
-    try {
-      await createUserWithEmailAndPassword(getAuth(), email, password);
-    } catch (error) {
-      alert("Error al registrarse: " + error.message);
-    }
-  };
 
   // Generamos los meses desde el mes actual hasta los siguientes 12 meses
   useEffect(() => {
@@ -104,75 +65,61 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    const confirmarReserva = () => {
-      if (!rangoInicio || !rangoFin || !usuario) return;
+  const confirmarReserva = () => {
+    if (!rangoInicio || !rangoFin || !usuario) return;
 
-      const nombre = nombreOcupante.trim().toLowerCase() === "yo"
-        ? usuario.displayName || usuario.email
-        : nombreOcupante.trim();
+    const nombre = nombreOcupante.trim().toLowerCase() === "yo"
+      ? usuario.displayName || usuario.email
+      : nombreOcupante.trim();
 
-      let fecha = rangoInicio;
-      while (fecha <= rangoFin) {
-        const refReserva = ref(db, `reservas/${fecha}`);
-        set(refReserva, {
-          reservadoPor: usuario.email,
-          ocupadoPor: nombre,
-        });
+    let fecha = rangoInicio;
+    while (fecha <= rangoFin) {
+      const refReserva = ref(db, `reservas/${fecha}`);
+      set(refReserva, {
+        reservadoPor: usuario.email,
+        ocupadoPor: nombre,
+      });
 
-        const siguiente = new Date(fecha);
-        siguiente.setDate(siguiente.getDate() + 1);
-        fecha = siguiente.toISOString().slice(0, 10);
-      }
+      const siguiente = new Date(fecha);
+      siguiente.setDate(siguiente.getDate() + 1);
+      fecha = siguiente.toISOString().slice(0, 10);
+    }
 
-      setRangoInicio(null);
-      setRangoFin(null);
-      setNombreOcupante("");
-    };
-    window.addEventListener("confirmarReserva", confirmarReserva);
-    return () => window.removeEventListener("confirmarReserva", confirmarReserva);
-  }, [rangoInicio, rangoFin, usuario, nombreOcupante]);
-
-  if (cargando) return <div>Iniciando sesión...</div>;
-
-  if (!usuario) {
-    return (
-      <div className="login-container">
-        <h1>{isLogin ? "Iniciar sesión" : "Registrarse"}</h1>
-        
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={handlePasswordChange}
-          onKeyDown={(e) => e.key === "Enter" && login()}  // Capturamos el Enter para login
-        />
-        
-        {isLogin ? (
-          <button onClick={login}>Iniciar sesión</button>
-        ) : (
-          <button onClick={register}>Registrarse</button>
-        )}
-
-        <button onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión"}
-        </button>
-      </div>
-    );
-  }
+    // Restablecer el rango de fechas después de la confirmación
+    setRangoInicio(null);
+    setRangoFin(null);
+    setNombreOcupante("");
+  };
 
   return (
-    <div className="calendario">
-      <div className="header">
+    <div style={{ padding: "1rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
         <h1>Calendario de Reservas 🏠</h1>
-        <span className="email">{usuario.email}</span>
-        <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
+        <div>
+          <span style={{ marginRight: "1rem", fontWeight: "bold" }}>{usuario.email}</span>
+          <button onClick={handleLogout} style={{ padding: "6px 10px" }}>Cerrar sesión</button>
+        </div>
+      </div>
+
+      {rangoInicio && rangoFin && (
+        <div style={{ marginBottom: "1rem" }}>
+          <label>¿Quién va al depto? </label>
+          <input
+            type="text"
+            value={nombreOcupante}
+            onChange={(e) => setNombreOcupante(e.target.value)}
+            placeholder="yo / otro nombre"
+          />
+        </div>
+      )}
+
+      <div style={{ marginBottom: "1rem" }}>
+        <button
+          onClick={confirmarReserva} // Llamamos a la función confirmarReserva cuando el usuario hace clic
+          style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#1976d2", color: "white" }}
+        >
+          Confirmar reserva
+        </button>
       </div>
 
       {meses.map(({ year, month }) => (
