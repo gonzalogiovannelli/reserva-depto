@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, creat
 import { ref, onValue, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
+import "./App.css"; // Asegúrate de tener estilos para el botón flotante y el cartel
 
 function App() {
   const [usuario, setUsuario] = useState(null);
@@ -89,9 +90,7 @@ function App() {
   const confirmarReserva = () => {
     if (!rangoInicio || !rangoFin || !usuario) return;
 
-    const nombre = nombreOcupante.trim().toLowerCase() === "yo"
-      ? usuario.displayName || usuario.email
-      : nombreOcupante.trim();
+    const nombre = usuario.email.substring(0, 5); // Usamos los primeros 5 caracteres del email
 
     let fecha = rangoInicio;
     while (fecha <= rangoFin) {
@@ -175,7 +174,7 @@ function App() {
         </button>
       )}
 
-      {mensajeReserva && <div className="mensaje-reserva">{mensajeReserva}</div>}
+      {mensajeReserva && <div className="cartel-confirmacion">{mensajeReserva}</div>}
     </div>
   );
 }
