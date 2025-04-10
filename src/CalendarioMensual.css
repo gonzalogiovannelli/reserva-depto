@@ -6,8 +6,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Asegura que la página ocupe toda la altura */
-  padding: 0 10px; /* Agregar un poco de espacio en los bordes */
+  min-height: 100vh;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
@@ -20,13 +20,14 @@ body {
   height: 100vh;
   text-align: center;
   width: 100%;
-  max-width: 400px; /* Maximo tamaño para la pantalla de login */
+  max-width: 400px;
 }
 
 .login-container input {
   margin: 10px 0;
   padding: 10px;
-  width: 100%; /* Ocupa todo el espacio disponible */
+  width: 100%;
+  max-width: 300px;
 }
 
 .login-container button {
@@ -49,7 +50,7 @@ body {
   align-items: center;
   padding: 2rem 0;
   width: 100%;
-  max-width: 1000px; /* Limitar el tamaño máximo del calendario */
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -69,7 +70,7 @@ body {
 .grilla {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 8px;
   width: 100%;
   margin-top: 1rem;
 }
@@ -78,16 +79,17 @@ body {
   font-weight: bold;
   background-color: #f0f0f0;
   text-align: center;
-  padding: 4px 0;
-  font-size: 13px;
+  padding: 8px 0;
+  font-size: 14px;
+  border-radius: 5px;
 }
 
 .dia {
   background-color: #f8f8f8;
   border-radius: 6px;
-  padding: 4px;
-  height: 70px;
-  font-size: 14px;
+  padding: 12px; /* Aumentado el padding */
+  height: 90px;  /* Aumentada la altura de las celdas */
+  font-size: 16px; /* Aumentado el tamaño de texto */
   position: relative;
   text-align: center;
   display: flex;
@@ -99,10 +101,10 @@ body {
 }
 
 .numero-dia {
-  font-size: 16px;
+  font-size: 18px; /* Aumentado el tamaño de los números */
   font-weight: bold;
   color: #333;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
 }
 
 .dia.ocupado {
@@ -150,8 +152,8 @@ body {
 @media (max-width: 600px) {
   .dia {
     font-size: 14px;
-    height: 70px;
-    padding: 8px;
+    height: 80px; /* Ajuste para pantallas móviles */
+    padding: 10px;
   }
 
   .numero-dia {
@@ -174,7 +176,7 @@ body {
   }
 
   .grilla {
-    grid-template-columns: repeat(7, 1fr); /* Ajustar para pantallas pequeñas */
+    grid-template-columns: repeat(7, 1fr); /* Ajuste para pantallas pequeñas */
     gap: 8px;
     max-width: 100%;
   }
