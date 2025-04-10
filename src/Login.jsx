@@ -26,7 +26,7 @@ function Login({ onLogin }) {
         onLogin(res.user);
       }
     } catch (err) {
-      setError("Error: " + err.message);
+      setError(err.message);
     }
   };
 
