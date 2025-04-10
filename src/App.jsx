@@ -52,7 +52,6 @@ function App() {
     }
   };
 
-  // Generamos los meses desde el mes actual hasta los siguientes 12 meses
   useEffect(() => {
     const hoy = new Date();
     hoy.setDate(1);
@@ -124,7 +123,10 @@ function App() {
       setRangoFin(null);
       setNombreOcupante("");
     };
+
+    // Aquí se escucha el evento que confirma la reserva
     window.addEventListener("confirmarReserva", confirmarReserva);
+
     return () => window.removeEventListener("confirmarReserva", confirmarReserva);
   }, [rangoInicio, rangoFin, usuario, nombreOcupante]);
 
@@ -181,6 +183,7 @@ function App() {
         </div>
       ))}
 
+      {/* El botón flotante solo aparece si se ha seleccionado un rango */}
       {rangoInicio && rangoFin && (
         <button
           onClick={() => {
