@@ -31,7 +31,8 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
+    <div className="login-container">
+      <h1>Calendario de The Wave 🌊🏠</h1>
       <h2>{esNuevo ? "Crear cuenta" : "Iniciar sesión"}</h2>
       <form onSubmit={manejarSubmit}>
         <input
@@ -40,7 +41,7 @@ function Login({ onLogin }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ width: "100%", padding: "0.5rem", marginBottom: "0.5rem" }}
+          className="login-input"
         />
         <input
           type="password"
@@ -48,19 +49,19 @@ function Login({ onLogin }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ width: "100%", padding: "0.5rem", marginBottom: "0.5rem" }}
+          className="login-input"
         />
-        <button type="submit" style={{ width: "100%", padding: "0.5rem", backgroundColor: "#007bff", color: "white" }}>
+        <button type="submit" className="login-button">
           {esNuevo ? "Crear cuenta" : "Entrar"}
         </button>
       </form>
       <p>
         {esNuevo ? "¿Ya tienes cuenta?" : "¿Eres nuevo?"}{" "}
-        <button onClick={() => setEsNuevo(!esNuevo)} style={{ color: "#007bff", background: "none", border: "none" }}>
+        <button onClick={() => setEsNuevo(!esNuevo)} className="toggle-button">
           {esNuevo ? "Iniciar sesión" : "Crear cuenta"}
         </button>
       </p>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 }

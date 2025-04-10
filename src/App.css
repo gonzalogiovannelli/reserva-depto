@@ -117,3 +117,105 @@
   border: none;
   cursor: pointer;
 }
+
+/* Estilos globales */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Contenedor principal del login */
+.login-container {
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Títulos */
+h1 {
+  margin-bottom: 1rem;
+  color: #007bff;
+  font-size: 1.8rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+/* Campos de entrada */
+.login-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Botón principal */
+.login-button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+/* Botón para alternar entre "Crear cuenta" e "Iniciar sesión" */
+.toggle-button {
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .login-container {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .login-input {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .login-button {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+}
