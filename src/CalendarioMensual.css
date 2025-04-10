@@ -88,7 +88,7 @@ body {
   background-color: #f8f8f8;
   border-radius: 6px;
   padding: 12px; /* Aumentado el padding */
-  height: 90px;  /* Aumentada la altura de las celdas */
+  height: 60px;  /* Aumentada la altura de las celdas */
   font-size: 16px; /* Aumentado el tamaño de texto */
   position: relative;
   text-align: center;
@@ -152,7 +152,7 @@ body {
 @media (max-width: 600px) {
   .dia {
     font-size: 14px;
-    height: 80px; /* Ajuste para pantallas móviles */
+    height: 60px; /* Ajuste para pantallas móviles */
     padding: 10px;
   }
 
@@ -172,7 +172,7 @@ body {
   /* Centrado del calendario para pantallas pequeñas */
   .calendario {
     width: 100%;
-    max-width: 90%;
+    max-width: 100%;
   }
 
   .grilla {
