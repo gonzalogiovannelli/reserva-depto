@@ -12,7 +12,7 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
   useEffect(() => {
     const dias = [];
     const primerDiaDelMes = new Date(year, month, 1);
-    const diaSemanaInicio = primerDiaDelMes.getDay();
+    const diaSemanaInicio = primerDiaDelMes.getDay(); // El día de la semana del primer día
     const ultimoDia = new Date(year, month + 1, 0);
     const totalDias = ultimoDia.getDate();
 
@@ -21,7 +21,7 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
       dias.push({
         fecha: null,
         clave: `vacio-${i}`,
-        estado: "vacio",
+        estado: "vacio", // Los días vacíos tendrán un estado especial
       });
     }
 
@@ -54,6 +54,7 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
       setDiasDelMes(actualizados);
     });
   }, [year, month]);
+
 
   const cancelarReserva = (clave) => {
     const confirmacion = window.confirm("¿Estás seguro de que querés cancelar esta reserva?");
