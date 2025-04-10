@@ -8,7 +8,7 @@ body, html {
   justify-content: center;
   align-items: flex-start; /* Aseguramos que el contenido se alinee en la parte superior */
   background-color: transparent;
-  overflow-y: auto;  /* Permite el scroll vertical */
+  overflow-y: scroll;  /* Permite el scroll vertical */
 }
 
 /* Login container */
