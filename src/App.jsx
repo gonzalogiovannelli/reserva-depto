@@ -119,7 +119,7 @@ function App() {
   return (
     <div className="calendario">
       <div className="header">
-        <h1>Calendario de Reservas 🏠</h1>
+        <h1>Calendario de The Wave 🌊🏠</h1>
         <span className="email">{usuario.email}</span>
         <button onClick={() => signOut(getAuth())} className="btn-logout">Cerrar sesión</button>
       </div>

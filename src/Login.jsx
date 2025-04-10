@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { Helmet } from "react-helmet"; // Importamos Helmet
 
 // Componente de Login/Registro
 function Login({ onLogin }) {
@@ -25,12 +26,17 @@ function Login({ onLogin }) {
         onLogin(res.user);
       }
     } catch (err) {
-      setError(err.message);
+      setError("Error: " + err.message);
     }
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
+      {/* Título de la página */}
+      <Helmet>
+        <title>Calendario de The Wave 🌊🏠</title>
+      </Helmet>
+
       <h2>{esNuevo ? "Crear cuenta" : "Iniciar sesión"}</h2>
       <form onSubmit={manejarSubmit}>
         <input
@@ -39,7 +45,13 @@ function Login({ onLogin }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "0.5rem" }}
+          style={{
+            width: "100%",
+            padding: "0.5rem",
+            marginBottom: "0.5rem",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
         />
         <input
           type="password"
@@ -47,16 +59,43 @@ function Login({ onLogin }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "0.5rem" }}
+          style={{
+            width: "100%",
+            padding: "0.5rem",
+            marginBottom: "0.5rem",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
         />
-        <button type="submit" style={{ width: "100%", marginBottom: "0.5rem" }}>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "0.5rem",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
           {esNuevo ? "Crear cuenta" : "Entrar"}
         </button>
       </form>
 
-      <p style={{ textAlign: "center", fontSize: "0.9rem" }}>
+      <p style={{ textAlign: "center", fontSize: "0.9rem", marginTop: "1rem" }}>
         {esNuevo ? "¿Ya tenés cuenta?" : "¿Sos nuevo?"}{" "}
-        <button onClick={() => setEsNuevo(!esNuevo)} style={{ fontSize: "0.9rem" }}>
+        <button
+          onClick={() => setEsNuevo(!esNuevo)}
+          style={{
+            fontSize: "0.9rem",
+            color: "#007bff",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            textDecoration: "underline",
+          }}
+        >
           {esNuevo ? "Iniciar sesión" : "Crear cuenta"}
         </button>
       </p>
