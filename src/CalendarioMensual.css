@@ -3,6 +3,11 @@ body {
   background-color: #333;
   margin: 0;
   font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Asegura que la página ocupe toda la altura */
+  padding: 0 10px; /* Agregar un poco de espacio en los bordes */
 }
 
 /* Pantalla de inicio de sesión centrada */
@@ -13,19 +18,19 @@ body {
   align-items: center;
   height: 100vh;
   text-align: center;
+  width: 100%;
+  max-width: 400px; /* Maximo tamaño para la pantalla de login */
 }
 
 .login-container input {
   margin: 10px 0;
   padding: 10px;
-  width: 80%;
-  max-width: 300px;
+  width: 100%; /* Ocupa todo el espacio disponible */
 }
 
 .login-container button {
   padding: 10px 20px;
-  width: 80%;
-  max-width: 300px;
+  width: 100%;
   cursor: pointer;
   margin: 10px 0;
 }
@@ -42,6 +47,9 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2rem 0;
+  width: 100%;
+  max-width: 1000px; /* Limitar el tamaño máximo del calendario */
+  margin: 0 auto;
 }
 
 .header {
@@ -61,14 +69,13 @@ body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 6px;
-  max-width: 90%;
-  width: 800px;
+  width: 100%;
   margin-top: 1rem;
 }
 
 .encabezado-dia {
   font-weight: bold;
-  background-color: #f0f0f0;
+  background-color: transparent;
   text-align: center;
   padding: 4px 0;
   font-size: 13px;
@@ -157,5 +164,12 @@ body {
   .boton-flotante {
     padding: 8px 12px;
     font-size: 14px;
+  }
+
+  /* Centrado del calendario para pantallas pequeñas */
+  .calendario {
+    padding: 1rem;
+    width: 100%;
+    max-width: 100%;
   }
 }
