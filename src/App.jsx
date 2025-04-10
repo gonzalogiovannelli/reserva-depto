@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { ref, onValue, set, remove } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
+import Login from "./Login"; // Importamos el componente Login
 import "./App.css";
 
 function App() {
@@ -113,7 +114,8 @@ function App() {
   };
 
   if (!usuario) {
-    return <div>Inicia sesión para usar la aplicación</div>;
+    // Renderizamos el componente Login si no hay usuario autenticado
+    return <Login onLogin={(user) => setUsuario(user)} />;
   }
 
   return (
