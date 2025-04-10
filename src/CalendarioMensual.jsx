@@ -97,7 +97,7 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
               <div className="numero-dia">{dia.fecha}</div>
               {dia.estado === "ocupado" && (
                 <div className="ocupado-nombre" title={dia.ocupadoPor}>
-                  {dia.ocupadoPor}
+                  {dia.ocupadoPor ? dia.ocupadoPor.substring(0, 5) + "..." : ""}
                 </div>
               )}
               {tooltipDia?.clave === dia.clave && (
