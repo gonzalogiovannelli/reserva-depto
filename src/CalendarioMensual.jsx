@@ -96,7 +96,9 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
             >
               <div className="numero-dia">{dia.fecha}</div>
               {dia.estado === "ocupado" && (
-                <div className="ocupado-nombre" title={dia.ocupadoPor}>{dia.ocupadoPor}</div>
+                <div className="ocupado-nombre" title={dia.ocupadoPor}>
+                  {dia.ocupadoPor} {/* Muestra el nombre o correo del ocupante */}
+                </div>
               )}
               {tooltipDia?.clave === dia.clave && (
                 <div className="tooltip-reserva">

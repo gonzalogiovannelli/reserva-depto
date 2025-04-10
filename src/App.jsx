@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
 
+// Componente principal de la aplicación
 function App() {
   const [usuario, setUsuario] = useState(null);
   const [meses, setMeses] = useState([]);
@@ -137,7 +137,7 @@ function App() {
 
   if (!usuario) {
     return (
-      <div>
+      <div className="login-container">
         <h1>{isLogin ? "Iniciar sesión" : "Registrarse"}</h1>
         
         <input
@@ -151,6 +151,7 @@ function App() {
           placeholder="Contraseña"
           value={password}
           onChange={handlePasswordChange}
+          onKeyDown={(e) => e.key === "Enter" && login()}  // Capturamos el Enter para login
         />
         
         {isLogin ? (
@@ -167,23 +168,11 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+    <div className="calendario">
+      <div className="header">
         <h1>Calendario de Reservas 🏠</h1>
-        <div>
-          <span style={{ marginRight: "1rem", fontWeight: "bold" }}>{usuario.email}</span>
-          <button onClick={handleLogout} style={{ padding: "6px 10px" }}>Cerrar sesión</button>
-        </div>
-      </div>
-
-      <div style={{ marginBottom: "1rem" }}>
-        <label>¿Quién va al depto? </label>
-        <input
-          type="text"
-          value={nombreOcupante}
-          onChange={(e) => setNombreOcupante(e.target.value)}
-          placeholder="yo / otro nombre"
-        />
+        <span className="email">{usuario.email}</span>
+        <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
       </div>
 
       {meses.map(({ year, month }) => (

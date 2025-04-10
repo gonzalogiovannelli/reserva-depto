@@ -1,142 +1,100 @@
+/* Centrar la pantalla de inicio de sesión */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.login-container input {
+  margin: 10px 0;
+  padding: 10px;
+  width: 80%;
+  max-width: 300px;
+}
+
+.login-container button {
+  padding: 10px 20px;
+  width: 80%;
+  max-width: 300px;
+  cursor: pointer;
+}
+
+/* Estilo para el calendario */
 .calendario {
-    margin-bottom: 2rem;
-    background-color: transparent;
-  }
-  
-  .grilla {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    background-color: transparent;
-  }
-  
-  .encabezado-dia {
-    font-weight: bold;
-    background-color: transparent;
-    text-align: center;
-    padding: 4px 0;
-    font-size: 13px;
-    border-bottom: none;
-  }
-  
-  .dia {
-    background-color: #f8f8f8;
-    border-radius: 6px;
-    padding: 4px;
-    height: 70px;
-    font-size: 14px;
-    position: relative;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    cursor: pointer;
-    overflow: hidden;
-    border: 1px solid #ccc;
-  }
-  
-  .dia-vacio {
-    background-color: transparent;
-    border: none;
-    height: 70px;
-  }
-  
-  .dia.libre {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .dia.ocupado {
-    background-color: #ffe0e0;
-    border: 1px solid #d88;
-  }
-  
-  .dia.seleccionado {
-    background-color: #b3e5fc;
-    border: 2px solid #039be5;
-  }
-  
-  .numero-dia {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 2px;
-  }
-  
-  .ocupado-nombre {
-    font-size: 11px;
-    color: #a00;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  
-  .tooltip-reserva {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #fff;
-    border: 1px solid #999;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    padding: 4px 6px;
-    font-size: 12px;
-    color: #333;
-    z-index: 10;
-  }
-  
-  .btn-cancelar {
-    margin-top: 4px;
-    background-color: #c62828;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .btn-cancelar:hover {
-    background-color: #b71c1c;
-  }
-  
-  .boton-flotante {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #1976d2;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  @media (max-width: 600px) {
-    .dia {
-      font-size: 12px;
-      height: 60px;
-      padding: 3px;
-    }
-  
-    .numero-dia {
-      font-size: 14px;
-    }
-  
-    .ocupado-nombre {
-      font-size: 10px;
-    }
-  
-    .tooltip-reserva {
-      font-size: 11px;
-    }
-  
-    .boton-flotante {
-      padding: 8px 12px;
-      font-size: 14px;
-    }
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 24px;
+}
+
+.header .email {
+  font-weight: bold;
+}
+
+/* Cambiar color rojo más oscuro para el estado ocupado */
+.dia.ocupado {
+  background-color: #d32f2f; /* Rojo más oscuro */
+  border: 1px solid #b71c1c;
+}
+
+.dia.seleccionado {
+  background-color: #b3e5fc;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.encabezado-dia {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.dia {
+  background-color: #f8f8f8;
+  border-radius: 6px;
+  padding: 4px;
+  height: 70px;
+  font-size: 14px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.numero-dia {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.ocupado-nombre {
+  font-size: 11px;
+  color: #a00;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
