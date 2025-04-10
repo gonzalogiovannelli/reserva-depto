@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ref, onValue, remove } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { db } from "./firebase";
 import "./CalendarioMensual.css";
 
@@ -12,20 +12,18 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
   useEffect(() => {
     const dias = [];
     const primerDiaDelMes = new Date(year, month, 1);
-    const diaSemanaInicio = primerDiaDelMes.getDay(); // El día de la semana del primer día
+    const diaSemanaInicio = primerDiaDelMes.getDay();
     const ultimoDia = new Date(year, month + 1, 0);
     const totalDias = ultimoDia.getDate();
 
-    // Agregar espacios vacíos antes del primer día del mes
     for (let i = 0; i < diaSemanaInicio; i++) {
       dias.push({
         fecha: null,
         clave: `vacio-${i}`,
-        estado: "vacio", // Los días vacíos tendrán un estado especial
+        estado: "vacio",
       });
     }
 
-    // Agregar días del mes
     for (let d = 1; d <= totalDias; d++) {
       const fechaTexto = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
       dias.push({
@@ -37,7 +35,6 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
       });
     }
 
-    // Leer datos de Firebase
     const reservasRef = ref(db, "reservas");
     onValue(reservasRef, (snapshot) => {
       const data = snapshot.val() || {};
@@ -55,17 +52,6 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
     });
   }, [year, month]);
 
-  const cancelarReserva = (clave) => {
-    const confirmacion = window.confirm("¿Estás seguro de que querés cancelar esta reserva?");
-    if (confirmacion) {
-      const reservaRef = ref(db, `reservas/${clave}`);
-      remove(reservaRef).then(() => {
-        alert("Reserva cancelada");
-        setTooltipDia(null);
-      });
-    }
-  };
-
   return (
     <div className="calendario">
       <h3>{fechaEnTexto(year, month)} ({month + 1}/{year})</h3>
@@ -75,12 +61,10 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
         ))}
         {diasDelMes.map((dia, i) => {
           if (dia.estado === "vacio") {
-            return <div key={dia.clave} className="dia dia-vacio"></div>; // Aplica la clase dia-vacio solo a los días vacíos
+            return <div key={dia.clave} className="dia dia-vacio"></div>;
           }
 
           const clase = enRango(dia.clave) ? "seleccionado" : dia.estado;
-          const esMio = dia.reservadoPor === usuario?.email;
-
           return (
             <div
               key={i}
@@ -97,36 +81,19 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
               <div className="numero-dia">{dia.fecha}</div>
               {dia.estado === "ocupado" && (
                 <div className="ocupado-nombre" title={dia.ocupadoPor}>
-                  {dia.ocupadoPor ? dia.ocupadoPor.substring(0, 5) + "..." : ""}
+                  {dia.ocupadoPor.substring(0, 5)}...
                 </div>
               )}
               {tooltipDia?.clave === dia.clave && (
                 <div className="tooltip-reserva">
                   <strong>Reservado por:</strong> {dia.reservadoPor}<br />
-                  <strong>Ocupado por:</strong> {dia.ocupadoPor}<br />
-                  {esMio && (
-                    <button className="btn-cancelar" onClick={() => cancelarReserva(dia.clave)}>
-                      Cancelar
-                    </button>
-                  )}
+                  <strong>Ocupado por:</strong> {dia.ocupadoPor}
                 </div>
               )}
             </div>
           );
         })}
       </div>
-
-      {rangoInicio && rangoFin && (
-        <button
-          onClick={() => {
-            const evento = new CustomEvent("confirmarReserva");
-            window.dispatchEvent(evento);
-          }}
-          className="boton-flotante"
-        >
-          Confirmar reserva
-        </button>
-      )}
     </div>
   );
 }

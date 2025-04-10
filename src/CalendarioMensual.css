@@ -1,101 +1,29 @@
-/* Estilos generales */
-body {
-  background-color: #333;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-/* Pantalla de inicio de sesión centrada */
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-container input {
-  margin: 10px 0;
-  padding: 10px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.login-container button {
-  padding: 10px 20px;
-  width: 100%;
-  cursor: pointer;
-  margin: 10px 0;
-}
-
-.login-container button:hover {
-  background-color: #ddd;
-  transition: background-color 0.3s;
-}
-
-/* Estilo para el calendario */
 .calendario {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.header h1 {
-  font-size: 24px;
-}
-
-.header .email {
-  font-weight: bold;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
 }
 
 .grilla {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  width: 100%;
-  margin-top: 1rem;
+  gap: 6px;
 }
 
 .encabezado-dia {
   font-weight: bold;
-  background-color: transparent;
+  background-color: #ffffff;
   text-align: center;
-  padding: 8px 0;
-  font-size: 14px;
-  border-radius: 5px;
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: none;
 }
-
-.dia-vacio {
-  background-color: transparent; /* Cambié el color de fondo a transparente */
-  border: 1px solid transparent; /* Borde transparente */
- }
-
 
 .dia {
   background-color: #f8f8f8;
   border-radius: 6px;
-  padding: 12px; /* Aumentado el padding */
-  height: 60px;  /* Aumentada la altura de las celdas */
-  font-size: 16px; /* Aumentado el tamaño de texto */
+  padding: 4px;
+  height: 70px;
+  font-size: 14px;
   position: relative;
   text-align: center;
   display: flex;
@@ -106,20 +34,40 @@ body {
   border: 1px solid #ccc;
 }
 
-.numero-dia {
-  font-size: 18px; /* Aumentado el tamaño de los números */
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 6px;
+.dia-vacio {
+  background-color: transparent;
+  border: none;
+  height: 70px;
+}
+
+.dia.libre {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
 }
 
 .dia.ocupado {
-  background-color: #c62828;
-  border: 1px solid #b71c1c;
+  background-color: #f28b82;
+  border: 1px solid #d88;
 }
 
 .dia.seleccionado {
   background-color: #b3e5fc;
+  border: 2px solid #039be5;
+}
+
+.numero-dia {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.ocupado-nombre {
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tooltip-reserva {
@@ -129,61 +77,23 @@ body {
   right: 0;
   background: #fff;
   border: 1px solid #999;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   padding: 4px 6px;
   font-size: 12px;
   color: #333;
-  z-index: 10;
 }
 
-.boton-flotante {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #1976d2;
+.btn-cancelar {
+  margin-top: 4px;
+  background-color: #c62828;
   color: white;
   border: none;
-  padding: 10px 16px;
-  font-size: 16px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
-.boton-flotante:hover {
-  background-color: #1565c0;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .dia {
-    font-size: 14px;
-    height: 60px; /* Ajuste para pantallas móviles */
-    padding: 10px;
-  }
-
-  .numero-dia {
-    font-size: 16px;
-  }
-
-  .tooltip-reserva {
-    font-size: 12px;
-  }
-
-  .boton-flotante {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-
-  /* Centrado del calendario para pantallas pequeñas */
-  .calendario {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .grilla {
-    grid-template-columns: repeat(7, 1fr); /* Ajuste para pantallas pequeñas */
-    gap: 8px;
-    max-width: 100%;
-  }
+.btn-cancelar:hover {
+  background-color: #b71c1c;
 }

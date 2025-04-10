@@ -4,29 +4,24 @@ import { ref, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
 
-// Componente principal de la aplicación
 function App() {
   const [usuario, setUsuario] = useState(null);
   const [meses, setMeses] = useState([]);
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
-  const [nombreOcupante, setNombreOcupante] = useState("");
-  const [email, setEmail] = useState(""); // Estado para el email
-  const [password, setPassword] = useState(""); // Estado para la contraseña
-  const [isLogin, setIsLogin] = useState(true); // Estado para saber si es login o registro
-  const [cargando, setCargando] = useState(true); // Estado para el proceso de carga
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
+  const [cargando, setCargando] = useState(true);
 
-  // Controlador para el cambio del email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  // Controlador para el cambio de la contraseña
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  // Verifica el estado de autenticación
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,13 +30,12 @@ function App() {
       } else {
         setUsuario(null);
       }
-      setCargando(false); // Una vez que verificamos el estado de autenticación
+      setCargando(false);
     });
 
-    return () => unsubscribe(); // Limpiar la suscripción cuando el componente se desmonte
+    return () => unsubscribe();
   }, []);
 
-  // Función para iniciar sesión con correo y contraseña
   const login = async () => {
     try {
       await signInWithEmailAndPassword(getAuth(), email, password);
@@ -50,7 +44,6 @@ function App() {
     }
   };
 
-  // Función para registrar un nuevo usuario
   const register = async () => {
     try {
       await createUserWithEmailAndPassword(getAuth(), email, password);
@@ -59,17 +52,14 @@ function App() {
     }
   };
 
-  // Generamos los meses desde el mes actual hasta los siguientes 12 meses
   useEffect(() => {
     const hoy = new Date();
-    hoy.setDate(1); // Aseguramos que empecemos desde el primer día del mes actual.
+    hoy.setDate(1);
     const inicio = new Date(hoy);
-
     const lista = [];
     for (let i = 0; i <= 12; i++) {
       const fecha = new Date(inicio);
       fecha.setMonth(fecha.getMonth() + i);
-
       lista.push({
         year: fecha.getFullYear(),
         month: fecha.getMonth(),
@@ -105,13 +95,10 @@ function App() {
     });
   };
 
-  // Función que se dispara cuando se confirma la reserva
   const confirmarReserva = () => {
     if (!rangoInicio || !rangoFin || !usuario) return;
 
-    const nombre = nombreOcupante.trim().toLowerCase() === "yo"
-      ? usuario.displayName || usuario.email
-      : nombreOcupante.trim();
+    const nombre = usuario.displayName || usuario.email;
 
     let fecha = rangoInicio;
     while (fecha <= rangoFin) {
@@ -126,10 +113,8 @@ function App() {
       fecha = siguiente.toISOString().slice(0, 10);
     }
 
-    // Restablecer el rango de fechas después de la confirmación
     setRangoInicio(null);
     setRangoFin(null);
-    setNombreOcupante("");
   };
 
   if (cargando) return <div>Iniciando sesión...</div>;
@@ -138,7 +123,6 @@ function App() {
     return (
       <div className="login-container">
         <h1>{isLogin ? "Iniciar sesión" : "Registrarse"}</h1>
-        
         <input
           type="email"
           placeholder="Correo electrónico"
@@ -150,15 +134,13 @@ function App() {
           placeholder="Contraseña"
           value={password}
           onChange={handlePasswordChange}
-          onKeyDown={(e) => e.key === "Enter" && login()}  // Capturamos el Enter para login
+          onKeyDown={(e) => e.key === "Enter" && login()}
         />
-        
         {isLogin ? (
           <button onClick={login}>Iniciar sesión</button>
         ) : (
           <button onClick={register}>Registrarse</button>
         )}
-
         <button onClick={() => setIsLogin(!isLogin)}>
           {isLogin ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión"}
         </button>
@@ -174,21 +156,9 @@ function App() {
         <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
       </div>
 
-      {rangoInicio && rangoFin && (
-        <div style={{ marginBottom: "1rem" }}>
-          <label>¿Quién va al depto? </label>
-          <input
-            type="text"
-            value={nombreOcupante}
-            onChange={(e) => setNombreOcupante(e.target.value)}
-            placeholder="yo / otro nombre"
-          />
-        </div>
-      )}
-
       <div style={{ marginBottom: "1rem" }}>
         <button
-          onClick={confirmarReserva} // Llamamos a la función confirmarReserva cuando el usuario hace clic
+          onClick={confirmarReserva} 
           style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#1976d2", color: "white" }}
         >
           Confirmar reserva
