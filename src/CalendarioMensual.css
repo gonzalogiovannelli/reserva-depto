@@ -8,7 +8,6 @@ body, html {
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  overflow-y: auto;  /* Permite el scroll vertical */
 }
 
 /* Login container */
@@ -33,7 +32,6 @@ body, html {
   width: 100%;  /* Asegura que el calendario ocupe el 100% del ancho disponible */
   margin: 0 auto;
   text-align: center;
-  overflow-y: auto;  /* Habilita scroll en caso de ser necesario */
 }
 
 .calendario {
@@ -42,8 +40,7 @@ body, html {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
-  overflow-y: auto;  /* Asegura que el contenido sea visible en todo momento */
-}
+ }
 
 .header {
   margin-bottom: 20px;
