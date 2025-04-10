@@ -8,13 +8,19 @@ function App() {
   const [meses, setMeses] = useState([]);
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
+  const [nombreOcupante, setNombreOcupante] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [cargando, setCargando] = useState(true);
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
   useEffect(() => {
     const auth = getAuth();
@@ -26,6 +32,7 @@ function App() {
       }
       setCargando(false);
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -45,15 +52,21 @@ function App() {
     }
   };
 
+  // Generamos los meses desde el mes actual hasta los siguientes 12 meses
   useEffect(() => {
     const hoy = new Date();
     hoy.setDate(1);
     const inicio = new Date(hoy);
+
     const lista = [];
     for (let i = 0; i <= 12; i++) {
       const fecha = new Date(inicio);
       fecha.setMonth(fecha.getMonth() + i);
-      lista.push({ year: fecha.getFullYear(), month: fecha.getMonth() });
+
+      lista.push({
+        year: fecha.getFullYear(),
+        month: fecha.getMonth(),
+      });
     }
     setMeses(lista);
   }, []);
@@ -80,30 +93,40 @@ function App() {
 
   const handleLogout = () => {
     const auth = getAuth();
-    signOut(auth).then(() => setUsuario(null));
+    signOut(auth).then(() => {
+      setUsuario(null);
+    });
   };
 
-  const confirmarReserva = () => {
-    if (!rangoInicio || !rangoFin || !usuario) return;
+  // Confirmar reserva y escribir en la base de datos
+  useEffect(() => {
+    const confirmarReserva = () => {
+      if (!rangoInicio || !rangoFin || !usuario) return;
 
-    const nombre = usuario.displayName || usuario.email;
+      const nombre = nombreOcupante.trim().toLowerCase() === "yo"
+        ? usuario.displayName || usuario.email
+        : nombreOcupante.trim();
 
-    let fecha = rangoInicio;
-    while (fecha <= rangoFin) {
-      const refReserva = ref(db, `reservas/${fecha}`);
-      set(refReserva, {
-        reservadoPor: usuario.email,
-        ocupadoPor: nombre,
-      });
+      let fecha = rangoInicio;
+      while (fecha <= rangoFin) {
+        const refReserva = ref(db, `reservas/${fecha}`);
+        set(refReserva, {
+          reservadoPor: usuario.email,
+          ocupadoPor: nombre,
+        });
 
-      const siguiente = new Date(fecha);
-      siguiente.setDate(siguiente.getDate() + 1);
-      fecha = siguiente.toISOString().slice(0, 10);
-    }
+        const siguiente = new Date(fecha);
+        siguiente.setDate(siguiente.getDate() + 1);
+        fecha = siguiente.toISOString().slice(0, 10);
+      }
 
-    setRangoInicio(null);
-    setRangoFin(null);
-  };
+      setRangoInicio(null);
+      setRangoFin(null);
+      setNombreOcupante("");
+    };
+    window.addEventListener("confirmarReserva", confirmarReserva);
+    return () => window.removeEventListener("confirmarReserva", confirmarReserva);
+  }, [rangoInicio, rangoFin, usuario, nombreOcupante]);
 
   if (cargando) return <div>Iniciando sesión...</div>;
 
@@ -137,20 +160,11 @@ function App() {
   }
 
   return (
-    <div className="calendario-container">
+    <div className="calendario">
       <div className="header">
         <h1>Calendario de Reservas 🏠</h1>
         <span className="email">{usuario.email}</span>
         <button onClick={handleLogout} className="btn-logout">Cerrar sesión</button>
-      </div>
-
-      <div className="confirmar-reserva">
-        <button
-          onClick={confirmarReserva}
-          className="boton-flotante"
-        >
-          Confirmar reserva
-        </button>
       </div>
 
       {meses.map(({ year, month }) => (
@@ -166,6 +180,18 @@ function App() {
           />
         </div>
       ))}
+
+      {rangoInicio && rangoFin && (
+        <button
+          onClick={() => {
+            const evento = new CustomEvent("confirmarReserva");
+            window.dispatchEvent(evento);
+          }}
+          className="boton-flotante"
+        >
+          Confirmar reserva
+        </button>
+      )}
     </div>
   );
 }
