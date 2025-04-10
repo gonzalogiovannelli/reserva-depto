@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
@@ -10,14 +10,53 @@ function App() {
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
   const [nombreOcupante, setNombreOcupante] = useState("");
+  const [email, setEmail] = useState(""); // Estado para el email
+  const [password, setPassword] = useState(""); // Estado para la contraseña
+  const [isLogin, setIsLogin] = useState(true); // Estado para saber si es login o registro
+  const [cargando, setCargando] = useState(true); // Estado para el proceso de carga
 
+  // Controlador para el cambio del email
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // Controlador para el cambio de la contraseña
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // Verifica el estado de autenticación
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUsuario(user);
+      if (user) {
+        setUsuario(user);
+      } else {
+        setUsuario(null);
+      }
+      setCargando(false); // Una vez que verificamos el estado de autenticación
     });
-    return () => unsubscribe();
+
+    return () => unsubscribe(); // Limpiar la suscripción cuando el componente se desmonte
   }, []);
+
+  // Función para iniciar sesión con correo y contraseña
+  const login = async () => {
+    try {
+      await signInWithEmailAndPassword(getAuth(), email, password);
+    } catch (error) {
+      alert("Error al iniciar sesión: " + error.message);
+    }
+  };
+
+  // Función para registrar un nuevo usuario
+  const register = async () => {
+    try {
+      await createUserWithEmailAndPassword(getAuth(), email, password);
+    } catch (error) {
+      alert("Error al registrarse: " + error.message);
+    }
+  };
 
   // Generamos los meses desde el mes actual hasta los siguientes 12 meses
   useEffect(() => {
@@ -94,7 +133,38 @@ function App() {
     return () => window.removeEventListener("confirmarReserva", confirmarReserva);
   }, [rangoInicio, rangoFin, usuario, nombreOcupante]);
 
-  if (!usuario) return <div>Iniciando sesión...</div>;
+  if (cargando) return <div>Iniciando sesión...</div>;
+
+  if (!usuario) {
+    return (
+      <div>
+        <h1>{isLogin ? "Iniciar sesión" : "Registrarse"}</h1>
+        
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        
+        {isLogin ? (
+          <button onClick={login}>Iniciar sesión</button>
+        ) : (
+          <button onClick={register}>Registrarse</button>
+        )}
+
+        <button onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión"}
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: "1rem" }}>
