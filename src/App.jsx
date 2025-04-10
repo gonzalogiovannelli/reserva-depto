@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, onValue, set } from "firebase/database";
 import { db } from "./firebase";
 import CalendarioMensual from "./CalendarioMensual";
 
@@ -13,14 +14,11 @@ function App() {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [cargando, setCargando] = useState(true);
+  const [mensajeReserva, setMensajeReserva] = useState("");
+  const [reservas, setReservas] = useState({}); // Estado para las reservas
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   useEffect(() => {
     const auth = getAuth();
@@ -32,25 +30,8 @@ function App() {
       }
       setCargando(false);
     });
-
     return () => unsubscribe();
   }, []);
-
-  const login = async () => {
-    try {
-      await signInWithEmailAndPassword(getAuth(), email, password);
-    } catch (error) {
-      alert("Error al iniciar sesión: " + error.message);
-    }
-  };
-
-  const register = async () => {
-    try {
-      await createUserWithEmailAndPassword(getAuth(), email, password);
-    } catch (error) {
-      alert("Error al registrarse: " + error.message);
-    }
-  };
 
   useEffect(() => {
     const hoy = new Date();
@@ -68,6 +49,14 @@ function App() {
       });
     }
     setMeses(lista);
+  }, []);
+
+  // Sincronizar reservas desde Firebase
+  useEffect(() => {
+    const reservasRef = ref(db, "reservas");
+    onValue(reservasRef, (snapshot) => {
+      setReservas(snapshot.val() || {});
+    });
   }, []);
 
   const seleccionarDia = (clave) => {
@@ -97,37 +86,32 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    const confirmarReserva = () => {
-      if (!rangoInicio || !rangoFin || !usuario) return;
+  const confirmarReserva = () => {
+    if (!rangoInicio || !rangoFin || !usuario) return;
 
-      const nombre = nombreOcupante.trim().toLowerCase() === "yo"
-        ? usuario.displayName || usuario.email
-        : nombreOcupante.trim();
+    const nombre = nombreOcupante.trim().toLowerCase() === "yo"
+      ? usuario.displayName || usuario.email
+      : nombreOcupante.trim();
 
-      let fecha = rangoInicio;
-      while (fecha <= rangoFin) {
-        const refReserva = ref(db, `reservas/${fecha}`);
-        set(refReserva, {
-          reservadoPor: usuario.email,
-          ocupadoPor: nombre,
-        });
+    let fecha = rangoInicio;
+    while (fecha <= rangoFin) {
+      const refReserva = ref(db, `reservas/${fecha}`);
+      set(refReserva, {
+        reservadoPor: usuario.email,
+        ocupadoPor: nombre,
+      });
 
-        const siguiente = new Date(fecha);
-        siguiente.setDate(siguiente.getDate() + 1);
-        fecha = siguiente.toISOString().slice(0, 10);
-      }
+      const siguiente = new Date(fecha);
+      siguiente.setDate(siguiente.getDate() + 1);
+      fecha = siguiente.toISOString().slice(0, 10);
+    }
 
-      setRangoInicio(null);
-      setRangoFin(null);
-      setNombreOcupante("");
-    };
-
-    // Aquí se escucha el evento que confirma la reserva
-    window.addEventListener("confirmarReserva", confirmarReserva);
-
-    return () => window.removeEventListener("confirmarReserva", confirmarReserva);
-  }, [rangoInicio, rangoFin, usuario, nombreOcupante]);
+    setRangoInicio(null);
+    setRangoFin(null);
+    setNombreOcupante("");
+    setMensajeReserva("Reserva confirmada exitosamente 🎉");
+    setTimeout(() => setMensajeReserva(""), 3000);
+  };
 
   if (cargando) return <div>Iniciando sesión...</div>;
 
@@ -177,23 +161,21 @@ function App() {
             rangoFin={rangoFin}
             seleccionarDia={seleccionarDia}
             enRango={enRango}
-            usuario={usuario}
+            reservas={reservas} // Pasamos las reservas al calendario
           />
         </div>
       ))}
 
-      {/* El botón flotante solo aparece si se ha seleccionado un rango */}
       {rangoInicio && rangoFin && (
         <button
-          onClick={() => {
-            const evento = new CustomEvent("confirmarReserva");
-            window.dispatchEvent(evento);
-          }}
+          onClick={confirmarReserva}
           className="boton-flotante"
         >
           Confirmar reserva
         </button>
       )}
+
+      {mensajeReserva && <div className="mensaje-reserva">{mensajeReserva}</div>}
     </div>
   );
 }

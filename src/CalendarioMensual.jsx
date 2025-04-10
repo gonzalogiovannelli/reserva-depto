@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
-import { db } from "./firebase";
 import "./CalendarioMensual.css";
 
-function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, enRango, usuario }) {
+function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, enRango, reservas }) {
   const [diasDelMes, setDiasDelMes] = useState([]);
-  const [tooltipDia, setTooltipDia] = useState(null);
 
   const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
@@ -26,31 +23,18 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
 
     for (let d = 1; d <= totalDias; d++) {
       const fechaTexto = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+      const reserva = reservas[fechaTexto];
       dias.push({
         fecha: d,
         clave: fechaTexto,
-        estado: "libre",
-        reservadoPor: null,
-        ocupadoPor: null,
+        estado: reserva ? "ocupado" : "libre",
+        reservadoPor: reserva?.reservadoPor || null,
+        ocupadoPor: reserva?.ocupadoPor || null,
       });
     }
 
-    const reservasRef = ref(db, "reservas");
-    onValue(reservasRef, (snapshot) => {
-      const data = snapshot.val() || {};
-      const actualizados = dias.map((dia) => {
-        if (dia.estado === "vacio") return dia;
-        const reserva = data[dia.clave];
-        return {
-          ...dia,
-          estado: reserva ? "ocupado" : "libre",
-          reservadoPor: reserva?.reservadoPor || null,
-          ocupadoPor: reserva?.ocupadoPor || null,
-        };
-      });
-      setDiasDelMes(actualizados);
-    });
-  }, [year, month]);
+    setDiasDelMes(dias);
+  }, [year, month, reservas]);
 
   return (
     <div className="calendario">
@@ -69,25 +53,12 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
             <div
               key={i}
               className={`dia ${clase}`}
-              onClick={() => {
-                if (dia.estado === "libre") {
-                  seleccionarDia(dia.clave);
-                } else if (dia.estado === "ocupado") {
-                  setTooltipDia(dia);
-                  setTimeout(() => setTooltipDia(null), 4000);
-                }
-              }}
+              onClick={() => dia.estado === "libre" && seleccionarDia(dia.clave)}
             >
               <div className="numero-dia">{dia.fecha}</div>
               {dia.estado === "ocupado" && (
                 <div className="ocupado-nombre" title={dia.ocupadoPor}>
                   {dia.ocupadoPor?.substring(0, 5)}...
-                </div>
-              )}
-              {tooltipDia?.clave === dia.clave && (
-                <div className="tooltip-reserva">
-                  <strong>Reservado por:</strong> {dia.reservadoPor}<br />
-                  <strong>Ocupado por:</strong> {dia.ocupadoPor}
                 </div>
               )}
             </div>
