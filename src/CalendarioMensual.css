@@ -85,9 +85,10 @@ body {
 }
 
 .dia-vacio {
-  background-color: transparent; /* Color de fondo para los días vacíos */
+  background-color: transparent; /* Cambié el color de fondo a transparente */
   border: 1px solid transparent; /* Borde transparente */
-}
+ }
+
 
 .dia {
   background-color: #f8f8f8;
