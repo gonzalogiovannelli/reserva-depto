@@ -2,12 +2,13 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100%;  /* Asegura que ocupamos toda la altura de la ventana */
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  overflow-y: auto;  /* Permite el scroll vertical */
 }
 
 /* Login container */
@@ -22,13 +23,17 @@ body, html {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 300px;
+  max-width: 100%;
+  overflow-y: auto;  /* Evita que se corte la pantalla si es necesario */
 }
 
 /* Calendario styles */
 .calendario-container {
   max-width: 1200px;
+  width: 100%;  /* Asegura que el calendario ocupe el 100% del ancho disponible */
   margin: 0 auto;
   text-align: center;
+  overflow-y: auto;  /* Habilita scroll en caso de ser necesario */
 }
 
 .calendario {
@@ -37,6 +42,7 @@ body, html {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
+  overflow-y: auto;  /* Asegura que el contenido sea visible en todo momento */
 }
 
 .header {
