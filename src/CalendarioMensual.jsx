@@ -55,7 +55,6 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
     });
   }, [year, month]);
 
-
   const cancelarReserva = (clave) => {
     const confirmacion = window.confirm("¿Estás seguro de que querés cancelar esta reserva?");
     if (confirmacion) {
@@ -75,47 +74,46 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
           <div key={`encabezado-${i}`} className="encabezado-dia">{dia}</div>
         ))}
         {diasDelMes.map((dia, i) => {
-  if (dia.estado === "vacio") {
-    return <div key={dia.clave} className="dia dia-vacio"></div>; // Aplica la clase dia-vacio solo a los días vacíos
-  }
+          if (dia.estado === "vacio") {
+            return <div key={dia.clave} className="dia dia-vacio"></div>; // Aplica la clase dia-vacio solo a los días vacíos
+          }
 
-  const clase = enRango(dia.clave) ? "seleccionado" : dia.estado;
-  const esMio = dia.reservadoPor === usuario?.email;
+          const clase = enRango(dia.clave) ? "seleccionado" : dia.estado;
+          const esMio = dia.reservadoPor === usuario?.email;
 
-  return (
-    <div
-      key={i}
-      className={`dia ${clase}`}
-      onClick={() => {
-        if (dia.estado === "libre") {
-          seleccionarDia(dia.clave);
-        } else if (dia.estado === "ocupado") {
-          setTooltipDia(dia);
-          setTimeout(() => setTooltipDia(null), 4000);
-        }
-      }}
-    >
-      <div className="numero-dia">{dia.fecha}</div>
-      {dia.estado === "ocupado" && (
-        <div className="ocupado-nombre" title={dia.ocupadoPor}>
-          {dia.ocupadoPor}
-        </div>
-      )}
-      {tooltipDia?.clave === dia.clave && (
-        <div className="tooltip-reserva">
-          <strong>Reservado por:</strong> {dia.reservadoPor}<br />
-          <strong>Ocupado por:</strong> {dia.ocupadoPor}<br />
-          {esMio && (
-            <button className="btn-cancelar" onClick={() => cancelarReserva(dia.clave)}>
-              Cancelar
-            </button>
-          )}
-        </div>
-      )}
-    </div>
-  );
-})}
-
+          return (
+            <div
+              key={i}
+              className={`dia ${clase}`}
+              onClick={() => {
+                if (dia.estado === "libre") {
+                  seleccionarDia(dia.clave);
+                } else if (dia.estado === "ocupado") {
+                  setTooltipDia(dia);
+                  setTimeout(() => setTooltipDia(null), 4000);
+                }
+              }}
+            >
+              <div className="numero-dia">{dia.fecha}</div>
+              {dia.estado === "ocupado" && (
+                <div className="ocupado-nombre" title={dia.ocupadoPor}>
+                  {dia.ocupadoPor}
+                </div>
+              )}
+              {tooltipDia?.clave === dia.clave && (
+                <div className="tooltip-reserva">
+                  <strong>Reservado por:</strong> {dia.reservadoPor}<br />
+                  <strong>Ocupado por:</strong> {dia.ocupadoPor}<br />
+                  {esMio && (
+                    <button className="btn-cancelar" onClick={() => cancelarReserva(dia.clave)}>
+                      Cancelar
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {rangoInicio && rangoFin && (
