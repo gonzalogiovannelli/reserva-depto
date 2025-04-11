@@ -1,13 +1,12 @@
 /* General styles */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Aseguramos que el contenido se alinee en la parte superior */
-  background-color: transparent;
+body {
+  font-size: 16px; /* Tamaño base del texto */
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 18px; /* Aumentamos el tamaño base del texto en móvil */
+  }
 }
 
 /* Login container */
@@ -30,12 +29,12 @@ body, html {
 .calendario-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra el contenido horizontalmente */
-  gap: 20px; /* Espaciado entre las grillas */
-  width: 100%;
-  max-width: 1200px; /* Ancho máximo */
-  margin: auto; /* Centra el contenedor */
-  padding: 20px;
+  align-items: center;
+  gap: 1rem; /* Cambiamos de px a rem */
+  width: 100%; /* Aseguramos que ocupe todo el ancho disponible */
+  max-width: 100%; /* Eliminamos restricciones de ancho máximo */
+  margin: 0 auto;
+  padding: 1rem; /* Cambiamos de px a rem */
   box-sizing: border-box;
 }
 
@@ -229,25 +228,25 @@ h3 {
 @media (max-width: 768px) {
   .calendario-container .grilla {
     grid-template-columns: repeat(7, 1fr) !important;
-    gap: 5px !important;
+    gap: 0.5rem !important; /* Cambiamos de px a rem */
     justify-content: center !important;
   }
 
   .calendario-container .dia {
-    height: 60px !important;
-    font-size: 12px !important;
+    height: 4rem !important; /* Cambiamos de px a rem */
+    font-size: 1rem !important; /* Cambiamos de px a rem */
   }
 
   .calendario-container .numero-dia {
-    font-size: 36px !important;
+    font-size: 2rem !important; /* Cambiamos de px a rem */
   }
 
   .calendario-container .ocupado-nombre {
-    font-size: 24px !important;
+    font-size: 1.5rem !important; /* Cambiamos de px a rem */
   }
 
   .calendario-container .btn-cancelar {
-    padding: 10px 20px !important;
-    font-size: 20px !important;
+    padding: 0.8rem 1.5rem !important; /* Cambiamos de px a rem */
+    font-size: 1.2rem !important; /* Cambiamos de px a rem */
   }
 }
