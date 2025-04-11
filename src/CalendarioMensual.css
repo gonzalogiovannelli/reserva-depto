@@ -226,9 +226,8 @@ h3 {
 }
 
 @media (max-width: 768px) {
-  .calendario-container .grilla {
-    grid-template-columns: repeat(7, 1fr) !important;
-    gap: 0.5rem !important; /* Cambiamos de px a rem */
+  .calendario-container .numero-dia {
+    font-size: 5rem !important; /* Tamaño muy grande para probar */
     justify-content: center !important;
   }
 
