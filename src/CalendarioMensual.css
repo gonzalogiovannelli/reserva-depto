@@ -28,11 +28,14 @@ body, html {
 
 /* Calendario styles */
 .calendario-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espaciado entre las grillas */
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  overflow-y: auto;  /* Permite el scroll en el calendario */
+  max-width: 1200px; /* Ancho máximo para evitar que se extienda demasiado */
+  margin: 0 auto; /* Centra el contenedor */
+  padding: 20px;
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
 }
 
 .calendario {
@@ -61,10 +64,11 @@ body, html {
 /* Estilo para la grilla del calendario */
 .grilla {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);  /* 7 columnas para cada día de la semana */
-  gap: 10px;
+  grid-template-columns: repeat(7, 1fr); /* 7 columnas para los días de la semana */
+  gap: 10px; /* Espaciado entre las celdas */
   margin-top: 10px;
-  max-width: 100%; /* Aseguramos que no exceda el ancho del contenedor */
+  max-width: 100%; /* Asegura que no exceda el ancho del contenedor */
+  box-sizing: border-box; /* Incluye el padding y el gap en el ancho total */
 }
 
 /* Estilo de los días */
