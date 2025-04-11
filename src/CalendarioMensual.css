@@ -225,9 +225,11 @@ h3 {
   }
   
   .grilla {
-    grid-template-columns: repeat(7, 1fr); /* Mantén las 7 columnas */
-    gap: 0.5rem; /* Espaciado entre las celdas */
+    display: grid;
+    grid-template-columns: repeat(7, calc((100% - (6 * 0.5rem)) / 7)); /* Ajusta el ancho de las columnas */
+    gap: 0.25rem; /* Espaciado entre las celdas */
     width: 100%; /* Asegura que la grilla ocupe todo el ancho disponible */
+    box-sizing: border-box; /* Incluye el padding y el gap en el cálculo del ancho */
   }
 
   .dia {
