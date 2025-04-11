@@ -1,11 +1,11 @@
 /* General styles */
 body {
-  font-size: 16px; /* Tamaño base del texto */
+  font-size: 14px; /* Tamaño base del texto */
 }
 
 @media (max-width: 768px) {
   body {
-    font-size: 18px; /* Aumentamos el tamaño base del texto en móvil */
+    font-size: 16px; /* Aumentamos el tamaño base del texto en móvil */
   }
 }
 
@@ -85,8 +85,8 @@ body {
 .grilla {
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* 7 columnas para los días de la semana */
-  gap: 10px; /* Espaciado entre las celdas */
-  margin-top: 10px;
+  gap: 0.5rem; /* Espaciado entre las celdas */
+  margin-top: 1rem;
   width: 100%; /* Asegura que la grilla ocupe todo el ancho disponible */
   justify-content: center; /* Centra la grilla horizontalmente */
   box-sizing: border-box; /* Incluye el padding y el gap en el ancho total */
@@ -227,14 +227,14 @@ h3 {
 
 @media (max-width: 768px) {
   .calendario-container .numero-dia {
-    font-size: 5rem !important; /* Tamaño muy grande para probar */
+    font-size: 2.5rem !important; /* Tamaño muy grande para probar */
     justify-content: center !important;
     background-color: red !important; /* Color de fondo para verificar */
   }
 
   .calendario-container .dia {
-    height: 4rem !important; /* Cambiamos de px a rem */
-    font-size: 1rem !important; /* Cambiamos de px a rem */
+    height: 6rem !important; /* Cambiamos de px a rem */
+    font-size: 1.2rem !important; /* Cambiamos de px a rem */
   }
 
   .calendario-container .ocupado-nombre {
