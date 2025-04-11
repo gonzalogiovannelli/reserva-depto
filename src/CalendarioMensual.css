@@ -51,14 +51,33 @@ body, html {
   margin-bottom: 20px;
 }
 
+/* Botón flotante que aparece cuando hay fechas seleccionadas */
 .boton-flotante {
-  margin-top: 20px;
+  position: sticky; /* Se mantendrá visible al hacer scroll */
+  bottom: 20px; /* Se mantendrá 20px desde el borde inferior */
   background-color: #1976d2;
   color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 8px;
+  padding: 15px 30px; /* Aumentamos el tamaño del botón */
+  font-size: 18px; /* Aumentamos el tamaño del texto */
+  border-radius: 10px;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Aseguramos que el botón siempre esté por encima de otros elementos */
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton-flotante:hover {
+  background-color: #005bb5; /* Cambiamos el color al pasar el mouse */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+  .boton-flotante {
+    padding: 12px 20px; /* Reducimos ligeramente el tamaño en móviles */
+    font-size: 16px;
+  }
 }
 
 /* Estilo para la grilla del calendario */
@@ -67,7 +86,7 @@ body, html {
   grid-template-columns: repeat(7, 1fr); /* 7 columnas para los días de la semana */
   gap: 10px; /* Espaciado entre las celdas */
   margin-top: 10px;
-  max-width: 100%; /* Asegura que no exceda el ancho del contenedor */
+  width: 100%; /* Asegura que la grilla ocupe todo el ancho disponible */
   box-sizing: border-box; /* Incluye el padding y el gap en el ancho total */
 }
 
