@@ -103,7 +103,6 @@ body {
   width: 120px; /* Aseguramos que las celdas ocupen el espacio disponible */
   overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
   white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
-  text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
 }
 
 /* Estilo para los días vacíos */
@@ -126,7 +125,6 @@ body {
   border: 1px solid #d88;
   overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
   white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
-  text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
 }
 
 /* Estilo para los días libres */
@@ -149,7 +147,6 @@ body {
   color: #333;
   white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
   overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
-  text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
   max-width: 100%; /* Aseguramos que el texto no exceda el ancho de la celda */
   text-align: center; /* Centramos el texto */
   margin-bottom: 5px; /* Espaciado entre el nombre y el botón */
@@ -249,7 +246,6 @@ h3 {
     font-weight: bold;
     color: #333;
     overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
-    text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
     white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
 }
 
