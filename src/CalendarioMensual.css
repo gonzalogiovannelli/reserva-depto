@@ -104,7 +104,7 @@ body, html {
   justify-content: center;  /* Centra el contenido verticalmente */
   align-items: center; /* Centra el contenido horizontalmente */
   height: 80px;  /* Fijamos una altura uniforme */
-  width: 100%; /* Aseguramos que las celdas ocupen el espacio disponible */
+  width: 120px; /* Aseguramos que las celdas ocupen el espacio disponible */
   overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
   white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
   text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
