@@ -254,16 +254,27 @@ h3 {
 }
 
   .calendario-container .ocupado-nombre {
-    font-size: 1rem; /* Ajustamos el tamaño del texto */
+    font-size: 0.8rem; /* Ajustamos el tamaño del texto */
     white-space: nowrap; /* Evitamos que el texto se divida en varias líneas */
     overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
-    text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
     max-width: 100%; /* Aseguramos que el texto no exceda el ancho de la celda */
     text-align: center; /* Centramos el texto */
   }
 
   .calendario-container .btn-cancelar {
-    padding: 0.5rem 1rem !important; /* Cambiamos de px a rem */
-    font-size: 0.9rem !important; /* Cambiamos de px a rem */
+    padding: 0.2rem 0.5rem; /* Reducimos el tamaño del botón */
+    font-size: 1.2rem; /* Ajustamos el tamaño del texto */
+    background-color: transparent; /* Eliminamos el fondo */
+    color: red; /* Cambiamos el color del texto a rojo */
+    border: none; /* Eliminamos el borde */
+    font-weight: bold; /* Hacemos la "X" más fuerte */
+    text-align: center; /* Centramos el texto */
+    width: auto; /* Ajustamos el ancho al contenido */
+    height: auto; /* Ajustamos la altura al contenido */
+    line-height: 1; /* Ajustamos la altura de línea */
+  }
+
+  .calendario-container .btn-cancelar::before {
+    content: "X"; /* Reemplazamos el texto del botón por una "X" */
   }
 }
