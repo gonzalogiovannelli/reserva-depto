@@ -226,7 +226,7 @@ h3 {
   
   .grilla {
     grid-template-columns: repeat(7, 1fr); /* Mantén las 7 columnas */
-    gap: 0.5rem;
+    gap: 0.5rem; /* Espaciado entre las celdas */
     width: 100%; /* Asegura que la grilla ocupe todo el ancho disponible */
   }
 
