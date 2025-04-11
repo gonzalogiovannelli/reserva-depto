@@ -231,9 +231,14 @@ h3 {
   }
 
   .dia {
-    width: 100%; /* Ajusta el ancho de las celdas al ancho disponible */
-    height: auto; /* Ajusta la altura automáticamente */
-    font-size: 1rem; /* Ajusta el tamaño del texto */
+    height: 80px; /* Fijamos una altura uniforme */
+    width: 100%; /* Ajustamos el ancho al contenedor */
+    font-size: 1rem; /* Ajustamos el tamaño del texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
   }
 
   .calendario-container .numero-dia {
@@ -252,7 +257,7 @@ h3 {
   }
 
   .calendario-container .btn-cancelar {
-    padding: 0.8rem 1.5rem !important; /* Cambiamos de px a rem */
-    font-size: 1.2rem !important; /* Cambiamos de px a rem */
+    padding: 0.5rem 1rem !important; /* Cambiamos de px a rem */
+    font-size: 0.9rem !important; /* Cambiamos de px a rem */
   }
 }
