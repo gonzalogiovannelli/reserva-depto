@@ -227,26 +227,26 @@ h3 {
 }
 
 @media (max-width: 768px) {
-  .grilla {
+  .calendario-container .grilla {
     grid-template-columns: repeat(7, 1fr) !important;
     gap: 5px !important;
     justify-content: center !important;
   }
 
-  .dia {
+  .calendario-container .dia {
     height: 60px !important;
     font-size: 12px !important;
   }
 
-  .numero-dia {
+  .calendario-container .numero-dia {
     font-size: 36px !important;
   }
 
-  .ocupado-nombre {
+  .calendario-container .ocupado-nombre {
     font-size: 24px !important;
   }
 
-  .btn-cancelar {
+  .calendario-container .btn-cancelar {
     padding: 10px 20px !important;
     font-size: 20px !important;
   }
