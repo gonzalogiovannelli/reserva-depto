@@ -30,12 +30,13 @@ body, html {
 .calendario-container {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Centra el contenido horizontalmente */
   gap: 20px; /* Espaciado entre las grillas */
   width: 100%;
-  max-width: 1800px; /* Ancho máximo para evitar que se extienda demasiado */
+  max-width: 1200px; /* Ancho máximo */
   margin: 0 auto; /* Centra el contenedor */
   padding: 20px;
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  box-sizing: border-box;
 }
 
 .calendario {
@@ -69,14 +70,15 @@ body, html {
 
 .boton-flotante:hover {
   background-color: #005bb5; /* Cambiamos el color al pasar el mouse */
-  transform: scale(1.05); /* Efecto de agrandamiento */
+  transform: scale(1.1); /* Efecto de agrandamiento al pasar el mouse */
 }
 
 /* Ajustes para dispositivos móviles */
 @media (max-width: 768px) {
   .boton-flotante {
-    padding: 12px 20px; /* Reducimos ligeramente el tamaño en móviles */
-    font-size: 16px;
+    padding: 30px 60px; /* Ajustamos el tamaño en móviles */
+    font-size: 36px; /* Reducimos ligeramente el tamaño del texto en móviles */
+    border-radius: 15px; /* Ajustamos los bordes redondeados */
   }
 }
 
@@ -189,16 +191,18 @@ body, html {
 
 /* Botón flotante que aparece cuando hay fechas seleccionadas */
 .boton-flotante {
-  position: sticky; /* Se mantendrá visible al hacer scroll, pero sin quedar fijo al final */
-  bottom: 20px;  /* Se mantendrá 20px desde el borde inferior */
+  position: sticky; /* Se mantendrá visible al hacer scroll */
+  bottom: 20px; /* Se mantendrá 20px desde el borde inferior */
   background-color: #1976d2;
   color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 8px;
+  padding: 45px 90px; /* Aumentamos el tamaño del botón (tres veces más grande) */
+  font-size: 48px; /* Aumentamos el tamaño del texto */
+  border-radius: 20px; /* Hacemos los bordes más redondeados */
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;  /* Aseguramos que el botón siempre esté por encima de otros elementos */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Aumentamos la sombra para destacar el botón */
+  z-index: 1000; /* Aseguramos que el botón siempre esté por encima de otros elementos */
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Estilo para el título del mes y año (ejemplo: "abril de 2025 (4/2025)") */
@@ -216,4 +220,17 @@ h3 {
   text-align: center;
   padding: 0.5rem;
   background-color: transparent; /* Aseguramos que no haya fondo */
+}
+
+@media (max-width: 768px) {
+  .grilla {
+    grid-template-columns: repeat(7, 1fr); /* Mantén las 7 columnas */
+    gap: 5px; /* Reduce el espaciado entre las celdas */
+    justify-content: center; /* Centra la grilla horizontalmente */
+  }
+
+  .dia {
+    height: 60px; /* Reduce la altura de las celdas */
+    font-size: 12px; /* Reduce el tamaño del texto */
+  }
 }
