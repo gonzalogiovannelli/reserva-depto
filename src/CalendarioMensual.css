@@ -32,7 +32,7 @@ body, html {
   flex-direction: column;
   gap: 20px; /* Espaciado entre las grillas */
   width: 100%;
-  max-width: 1200px; /* Ancho máximo para evitar que se extienda demasiado */
+  max-width: 1800px; /* Ancho máximo para evitar que se extienda demasiado */
   margin: 0 auto; /* Centra el contenedor */
   padding: 20px;
   box-sizing: border-box; /* Incluye el padding en el ancho total */
