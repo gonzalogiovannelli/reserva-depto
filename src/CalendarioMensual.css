@@ -3,12 +3,6 @@ body {
   font-size: 14px; /* Tamaño base del texto */
 }
 
-@media (max-width: 768px) {
-  body {
-    font-size: 16px; /* Aumentamos el tamaño base del texto en móvil */
-  }
-}
-
 /* Login container */
 .login-container {
   display: flex;
@@ -226,6 +220,22 @@ h3 {
 }
 
 @media (max-width: 768px) {
+  body {
+    font-size: 14px; /* Reduce el tamaño base del texto */
+  }
+  
+  .grilla {
+    grid-template-columns: repeat(7, 1fr); /* Mantén las 7 columnas */
+    gap: 0.5rem;
+    width: 100%; /* Asegura que la grilla ocupe todo el ancho disponible */
+  }
+
+  .dia {
+    width: 100%; /* Ajusta el ancho de las celdas al ancho disponible */
+    height: auto; /* Ajusta la altura automáticamente */
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+  }
+
   .calendario-container .numero-dia {
     font-size: 2.5rem !important; /* Tamaño muy grande para probar */
     justify-content: center !important;
