@@ -157,7 +157,8 @@ body, html {
   overflow: hidden; /* Ocultamos el contenido que exceda el tamaño */
   text-overflow: ellipsis; /* Agregamos puntos suspensivos si el texto es demasiado largo */
   max-width: 100%; /* Aseguramos que el texto no exceda el ancho de la celda */
-  text-align: center;
+  text-align: center; /* Centramos el texto */
+  margin-bottom: 5px; /* Espaciado entre el nombre y el botón */
 }
 
 /* Estilo del tooltip de la reserva */
@@ -175,14 +176,15 @@ body, html {
 }
 
 .btn-cancelar {
-  margin-top: 4px;
+  margin: 0 auto; /* Centra el botón horizontalmente */
   background-color: #c62828;
   color: white;
   border: none;
-  padding: 4px 8px;
+  padding: 6px 12px; /* Ajustamos el tamaño del botón */
   font-size: 12px;
   cursor: pointer;
   border-radius: 4px;
+  display: block; /* Asegura que el botón ocupe toda la línea */
 }
 
 .btn-cancelar:hover {
@@ -195,8 +197,8 @@ body, html {
   bottom: 20px; /* Se mantendrá 20px desde el borde inferior */
   background-color: #1976d2;
   color: white;
-  padding: 45px 90px; /* Aumentamos el tamaño del botón (tres veces más grande) */
-  font-size: 48px; /* Aumentamos el tamaño del texto */
+  padding: 45px 90px; /* Tamaño del botón */
+  font-size: 36px; /* Reducimos el tamaño de la fuente un 15%  */
   border-radius: 20px; /* Hacemos los bordes más redondeados */
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Aumentamos la sombra para destacar el botón */
