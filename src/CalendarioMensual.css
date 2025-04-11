@@ -227,17 +227,14 @@ h3 {
 
 @media (max-width: 768px) {
   .calendario-container .numero-dia {
-    font-size: 15rem !important; /* Tamaño muy grande para probar */
+    font-size: 5rem !important; /* Tamaño muy grande para probar */
     justify-content: center !important;
+    background-color: red !important; /* Color de fondo para verificar */
   }
 
   .calendario-container .dia {
     height: 4rem !important; /* Cambiamos de px a rem */
     font-size: 1rem !important; /* Cambiamos de px a rem */
-  }
-
-  .calendario-container .numero-dia {
-    font-size: 2rem !important; /* Cambiamos de px a rem */
   }
 
   .calendario-container .ocupado-nombre {
