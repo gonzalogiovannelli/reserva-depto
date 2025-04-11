@@ -76,8 +76,8 @@ body, html {
 /* Ajustes para dispositivos móviles */
 @media (max-width: 768px) {
   .boton-flotante {
-    padding: 30px 60px; /* Ajustamos el tamaño en móviles */
-    font-size: 36px; /* Reducimos ligeramente el tamaño del texto en móviles */
+    padding: 60px 120px; /* Ajustamos el tamaño en móviles */
+    font-size: 48px; /* Reducimos ligeramente el tamaño del texto en móviles */
     border-radius: 15px; /* Ajustamos los bordes redondeados */
   }
 }
@@ -238,15 +238,15 @@ h3 {
     font-size: 12px; /* Reduce el tamaño del texto */
   }
   .numero-dia {
-    font-size: 20px; /* Aumentamos el tamaño del número de la fecha */
+    font-size: 36px; /* Aumentamos el tamaño del número de la fecha */
   }
 
   .ocupado-nombre {
-    font-size: 16px; /* Aumentamos el tamaño del nombre del usuario */
+    font-size: 24px; /* Aumentamos el tamaño del nombre del usuario */
   }
 
   .btn-cancelar {
     padding: 10px 20px; /* Aumentamos el tamaño del botón */
-    font-size: 14px; /* Aumentamos el tamaño del texto del botón */
+    font-size: 20px; /* Aumentamos el tamaño del texto del botón */
   }
 }
