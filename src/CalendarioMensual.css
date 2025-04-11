@@ -227,7 +227,7 @@ h3 {
 
 @media (max-width: 768px) {
   .calendario-container .numero-dia {
-    font-size: 5rem !important; /* Tamaño muy grande para probar */
+    font-size: 15rem !important; /* Tamaño muy grande para probar */
     justify-content: center !important;
   }
 
