@@ -34,7 +34,7 @@ body, html {
   gap: 20px; /* Espaciado entre las grillas */
   width: 100%;
   max-width: 1200px; /* Ancho máximo */
-  margin: 0 auto; /* Centra el contenedor */
+  margin: auto; /* Centra el contenedor */
   padding: 20px;
   box-sizing: border-box;
 }
@@ -228,25 +228,26 @@ h3 {
 
 @media (max-width: 768px) {
   .grilla {
-    grid-template-columns: repeat(7, 1fr); /* Mantén las 7 columnas */
-    gap: 5px; /* Reduce el espaciado entre las celdas */
-    justify-content: center; /* Centra la grilla horizontalmente */
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 5px !important;
+    justify-content: center !important;
   }
 
   .dia {
-    height: 60px; /* Reduce la altura de las celdas */
-    font-size: 12px; /* Reduce el tamaño del texto */
+    height: 60px !important;
+    font-size: 12px !important;
   }
+
   .numero-dia {
-    font-size: 36px; /* Aumentamos el tamaño del número de la fecha */
+    font-size: 36px !important;
   }
 
   .ocupado-nombre {
-    font-size: 24px; /* Aumentamos el tamaño del nombre del usuario */
+    font-size: 24px !important;
   }
 
   .btn-cancelar {
-    padding: 10px 20px; /* Aumentamos el tamaño del botón */
-    font-size: 20px; /* Aumentamos el tamaño del texto del botón */
+    padding: 10px 20px !important;
+    font-size: 20px !important;
   }
 }
