@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./CalendarioMensual.css";
 
-function CalendarioMensual({ year, month, reservas, cancelarReserva, usuario }) {
+function CalendarioMensual({ year, month, reservas, cancelarReserva, usuario, seleccionarDia, enRango }) {
   const [diasDelMes, setDiasDelMes] = useState([]);
-  const [diaSeleccionado, setDiaSeleccionado] = useState(null);
 
   const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
@@ -33,21 +32,6 @@ function CalendarioMensual({ year, month, reservas, cancelarReserva, usuario }) 
     setDiasDelMes(dias);
   }, [year, month, reservas]);
 
-  const seleccionarDia = (dia) => {
-    setDiaSeleccionado(dia);
-    const boton = document.getElementById("boton-cancelar");
-    boton.classList.add("visible");
-  };
-
-  const cancelarReservaFlotante = () => {
-    if (diaSeleccionado) {
-      cancelarReserva(diaSeleccionado);
-      setDiaSeleccionado(null);
-      const boton = document.getElementById("boton-cancelar");
-      boton.classList.remove("visible");
-    }
-  };
-
   return (
     <div className="calendario">
       <h3>{new Date(year, month).toLocaleString("default", { month: "long", year: "numeric" })}</h3>
@@ -65,8 +49,8 @@ function CalendarioMensual({ year, month, reservas, cancelarReserva, usuario }) 
           return (
             <div
               key={i}
-              className={`dia ${dia.estado}`}
-              onClick={() => esUsuario && seleccionarDia(dia.clave)}
+              className={`dia ${dia.estado} ${enRango(dia.clave) ? "en-rango" : ""}`}
+              onClick={() => dia.estado === "libre" ? seleccionarDia(dia.clave) : esUsuario && cancelarReserva(dia.clave)}
             >
               <div className="numero-dia">{dia.fecha}</div>
               {dia.estado === "ocupado" && (
@@ -76,15 +60,6 @@ function CalendarioMensual({ year, month, reservas, cancelarReserva, usuario }) 
           );
         })}
       </div>
-
-      {/* Botón flotante para cancelar reservas */}
-      <button
-        className="boton-flotante-cancelar"
-        id="boton-cancelar"
-        onClick={cancelarReservaFlotante}
-      >
-        Cancelar
-      </button>
     </div>
   );
 }

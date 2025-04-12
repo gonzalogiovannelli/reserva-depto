@@ -7,7 +7,7 @@ import Login from "./Login"; // Importamos el componente Login
 import "./App.css";
 
 function App() {
-  const [usuario, setUsuario] = useState({ email: "usuario@ejemplo.com" });
+  const [usuario, setUsuario] = useState(null);
   const [meses, setMeses] = useState([]);
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
