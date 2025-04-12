@@ -69,9 +69,9 @@ body {
 /* Ajustes para dispositivos móviles */
 @media (max-width: 768px) {
   .boton-flotante {
-    padding: 60px 120px; /* Ajustamos el tamaño en móviles */
-    font-size: 48px; /* Reducimos ligeramente el tamaño del texto en móviles */
-    border-radius: 15px; /* Ajustamos los bordes redondeados */
+    padding: 10px 20px; /* Ajustamos el tamaño en móviles */
+    font-size: 14px; /* Reducimos ligeramente el tamaño del texto en móviles */
+    border-radius: 5px; /* Ajustamos los bordes redondeados */
   }
 }
 
@@ -182,22 +182,6 @@ body {
   background-color: #b71c1c;
 }
 
-/* Botón flotante que aparece cuando hay fechas seleccionadas */
-.boton-flotante {
-  position: sticky; /* Se mantendrá visible al hacer scroll */
-  bottom: 20px; /* Se mantendrá 20px desde el borde inferior */
-  background-color: #1976d2;
-  color: white;
-  padding: 45px 90px; /* Tamaño del botón */
-  font-size: 36px; /* Reducimos el tamaño de la fuente un 15%  */
-  border-radius: 20px; /* Hacemos los bordes más redondeados */
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Aumentamos la sombra para destacar el botón */
-  z-index: 1000; /* Aseguramos que el botón siempre esté por encima de otros elementos */
-  text-align: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
 /* Estilo para el título del mes y año (ejemplo: "abril de 2025 (4/2025)") */
 h3 {
   color: white; /* Cambiamos el color de la fuente a blanco */
@@ -296,4 +280,10 @@ h3 {
   .boton-flotante-cancelar:hover {
     background-color: darkred; /* Cambia el color al pasar el mouse */
   }
+}
+
+/* Estilo para las celdas dentro del rango seleccionado */
+.dia.en-rango {
+  background-color: #a7ffeb; /* Verde claro */
+  border: 1px solid #64ffda; /* Verde más oscuro */
 }
