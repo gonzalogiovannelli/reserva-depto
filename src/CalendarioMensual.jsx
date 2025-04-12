@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./CalendarioMensual.css";
 
-function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia, enRango, reservas, cancelarReserva, usuario }) {
+function CalendarioMensual({ year, month, reservas, cancelarReserva, usuario }) {
   const [diasDelMes, setDiasDelMes] = useState([]);
+  const [diaSeleccionado, setDiaSeleccionado] = useState(null);
 
   const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
@@ -14,11 +15,7 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
     const totalDias = ultimoDia.getDate();
 
     for (let i = 0; i < diaSemanaInicio; i++) {
-      dias.push({
-        fecha: null,
-        clave: `vacio-${i}`,
-        estado: "vacio",
-      });
+      dias.push({ fecha: null, clave: `vacio-${i}`, estado: "vacio" });
     }
 
     for (let d = 1; d <= totalDias; d++) {
@@ -36,9 +33,24 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
     setDiasDelMes(dias);
   }, [year, month, reservas]);
 
+  const seleccionarDia = (dia) => {
+    setDiaSeleccionado(dia);
+    const boton = document.getElementById("boton-cancelar");
+    boton.classList.add("visible");
+  };
+
+  const cancelarReservaFlotante = () => {
+    if (diaSeleccionado) {
+      cancelarReserva(diaSeleccionado);
+      setDiaSeleccionado(null);
+      const boton = document.getElementById("boton-cancelar");
+      boton.classList.remove("visible");
+    }
+  };
+
   return (
     <div className="calendario">
-      <h3>{fechaEnTexto(year, month)} ({month + 1}/{year})</h3>
+      <h3>{new Date(year, month).toLocaleString("default", { month: "long", year: "numeric" })}</h3>
       <div className="grilla">
         {diasSemana.map((dia, i) => (
           <div key={`encabezado-${i}`} className="encabezado-dia">{dia}</div>
@@ -48,42 +60,33 @@ function CalendarioMensual({ year, month, rangoInicio, rangoFin, seleccionarDia,
             return <div key={dia.clave} className="dia dia-vacio"></div>;
           }
 
-          const clase = enRango(dia.clave) ? "seleccionado" : dia.estado;
           const esUsuario = dia.reservadoPor === usuario.email;
 
           return (
             <div
               key={i}
-              className={`dia ${clase}`}
-              onClick={() => dia.estado === "libre" && seleccionarDia(dia.clave)}
+              className={`dia ${dia.estado}`}
+              onClick={() => esUsuario && seleccionarDia(dia.clave)}
             >
               <div className="numero-dia">{dia.fecha}</div>
               {dia.estado === "ocupado" && (
-                <div className="ocupado-nombre" title={dia.ocupadoPor}>
-                  {dia.ocupadoPor}
-                  {esUsuario && (
-                    <button
-                      className="btn-cancelar"
-                      onClick={() => cancelarReserva(dia.clave)}
-                    >
-                      Cancelar
-                    </button>
-                  )}
-                </div>
+                <div className="ocupado-nombre">{dia.ocupadoPor}</div>
               )}
             </div>
           );
         })}
       </div>
+
+      {/* Botón flotante para cancelar reservas */}
+      <button
+        className="boton-flotante-cancelar"
+        id="boton-cancelar"
+        onClick={cancelarReservaFlotante}
+      >
+        Cancelar
+      </button>
     </div>
   );
-}
-
-function fechaEnTexto(year, month) {
-  return new Date(year, month).toLocaleString("default", {
-    month: "long",
-    year: "numeric",
-  });
 }
 
 export default CalendarioMensual;

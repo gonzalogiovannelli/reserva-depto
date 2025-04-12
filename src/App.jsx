@@ -7,7 +7,7 @@ import Login from "./Login"; // Importamos el componente Login
 import "./App.css";
 
 function App() {
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useState({ email: "usuario@ejemplo.com" });
   const [meses, setMeses] = useState([]);
   const [rangoInicio, setRangoInicio] = useState(null);
   const [rangoFin, setRangoFin] = useState(null);
@@ -104,12 +104,9 @@ function App() {
   };
 
   const cancelarReserva = (fecha) => {
-    if (!usuario) return;
-
     const refReserva = ref(db, `reservas/${fecha}`);
     remove(refReserva).then(() => {
-      setMensajeReserva("Reserva cancelada exitosamente 🗑️");
-      setTimeout(() => setMensajeReserva(""), 3000);
+      alert(`Reserva del día ${fecha} cancelada`);
     });
   };
 
